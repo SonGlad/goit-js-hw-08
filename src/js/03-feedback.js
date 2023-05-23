@@ -43,6 +43,7 @@ const save = (key, value) => {
   
   refs.form.addEventListener('input', onFormChange);
   
+  
   document.addEventListener('DOMContentLoaded', updateFormFields);
   
   function updateFormFields(event) {
