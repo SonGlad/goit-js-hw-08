@@ -20,6 +20,7 @@
   "dependencies": {
     "@vimeo/player": "^2.19.0",
     "install": "^0.13.0",
+    "lodash.throttle": "^4.1.1",
     "modern-normalize": "^1.1.0",
     "npm": "^9.6.7",
     "simplelightbox": "^2.14.0"
