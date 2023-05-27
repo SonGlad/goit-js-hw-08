@@ -20,9 +20,7 @@ export default {
   save,
   load,
 };
-
-////////////////////////////////////////
-
+// ----------------------------------------------
 import throttle from 'lodash.throttle';
 const refs = {
   form: document.querySelector('.feedback-form'),
@@ -35,6 +33,7 @@ const formState = {};
 const onFormChange = throttle(() => {
   (formState.email = refs.emailInput.value.trim()),
     (formState.message = refs.messageInput.value.trim()),
+    //   console.log(formState);
 
     save(STORAGE_KEY, formState);
 }, 500);
