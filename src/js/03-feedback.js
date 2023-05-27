@@ -20,7 +20,11 @@ export default {
   save,
   load,
 };
-// ----------------------------------------------
+
+///////////////////////////////////////////////////////////////
+
+
+
 import throttle from 'lodash.throttle';
 const refs = {
   form: document.querySelector('.feedback-form'),
