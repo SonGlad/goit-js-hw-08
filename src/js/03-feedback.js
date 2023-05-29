@@ -24,25 +24,29 @@ export default {
 ///////////////////////////////////////////////////////////////
 
 import throttle from 'lodash.throttle';
+
 const refs = {
   form: document.querySelector('.feedback-form'),
   emailInput: document.querySelector('input[name="email"]'),
   messageInput: document.querySelector('textarea[name="message"]'),
 };
-
 const STORAGE_KEY = 'feedback-form-state';
+
+
+document.addEventListener('DOMContentLoaded', updateFormFields);
+refs.form.addEventListener('submit', onSubmitForm);
+
+
 const formState = {};
 const onFormChange = throttle(() => {
   (formState.email = refs.emailInput.value.trim()),
-    (formState.message = refs.messageInput.value.trim()),
-    //   console.log(formState);
-
-    save(STORAGE_KEY, formState);
+  (formState.message = refs.messageInput.value.trim()),
+  //   console.log(formState);
+  save(STORAGE_KEY, formState);
 }, 500);
-
 refs.form.addEventListener('input', onFormChange);
 
-document.addEventListener('DOMContentLoaded', updateFormFields);
+
 
 function updateFormFields(event) {
   const savedState = load(STORAGE_KEY);
@@ -54,10 +58,10 @@ function updateFormFields(event) {
   }
 }
 
-refs.form.addEventListener('submit', onSubmitForm);
 
 function onSubmitForm(event) {
   event.preventDefault();
+
   load(STORAGE_KEY);
   localStorage.removeItem(STORAGE_KEY);
   refs.emailInput.value = '';
