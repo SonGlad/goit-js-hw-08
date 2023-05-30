@@ -20,9 +20,18 @@ const load = key => {
   }
 };
 
+const remove = key => {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error("Remove item error: ", error.message);
+  }
+};
+
 export default {
   save,
   load,
+  remove,
 };
 
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -70,8 +79,11 @@ function getFormDataFromLocalStorage(){
 function onFormSubmit(event){
   event.preventDefault();
   console.log(formData);
-  localStorage.removeItem(STORAGE_KEY);
+  // localStorage.removeItem(STORAGE_KEY);
   event.currentTarget.reset();
+  remove(STORAGE_KEY);
+  formData.email = '';
+  formData.message = '';
 };
 
 
