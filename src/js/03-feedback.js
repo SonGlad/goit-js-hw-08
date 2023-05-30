@@ -1,9 +1,13 @@
+import throttle from "lodash.throttle";
+
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 const save = (key, value) => {
   try {
     const serializedState = JSON.stringify(value);
     localStorage.setItem(key, serializedState);
   } catch (error) {
-    console.error('Set state error: ', error.message);
+    console.error("Set state error: ", error.message);
   }
 };
 
@@ -12,7 +16,7 @@ const load = key => {
     const serializedState = localStorage.getItem(key);
     return serializedState === null ? undefined : JSON.parse(serializedState);
   } catch (error) {
-    console.error('Get state error: ', error.message);
+    console.error("Get state error: ", error.message);
   }
 };
 
@@ -21,51 +25,58 @@ export default {
   load,
 };
 
-///////////////////////////////////////////////////////////////
-
-import throttle from 'lodash.throttle';
+// \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 const refs = {
-  form: document.querySelector('.feedback-form'),
-  emailInput: document.querySelector('input[name="email"]'),
-  messageInput: document.querySelector('textarea[name="message"]'),
+  formEl: document.querySelector(".feedback-form"),
+  emailEl: document.querySelector(".feedback-form input"),
+  messaEl: document.querySelector(".feedback-form textarea"),
 };
-const STORAGE_KEY = 'feedback-form-state';
+const STORAGE_KEY = "feedback-form-state";
+const formData = {};
 
 
-document.addEventListener('DOMContentLoaded', updateFormFields);
-refs.form.addEventListener('submit', onSubmitForm);
-
-
-const formState = {};
-const onFormChange = throttle(() => {
-  (formState.email = refs.emailInput.value.trim()),
-  (formState.message = refs.messageInput.value.trim()),
-  //   console.log(formState);
-  save(STORAGE_KEY, formState);
-}, 500);
-refs.form.addEventListener('input', onFormChange);
+document.addEventListener('DOMContentLoaded', getFormDataFromLocalStorage);
+refs.formEl.addEventListener('submit', onFormSubmit);
 
 
 
-function updateFormFields(event) {
-  const savedState = load(STORAGE_KEY);
-  if (savedState) {
-    refs.emailInput.value = savedState.email;
-    refs.messageInput.value = savedState.message;
-    formState.email = savedState.email; 
-    formState.message = savedState.message; 
-  }
-}
+refs.formEl.addEventListener('input', throttle(function(event) {
+  formData[event.target.name] = event.target.value;
+
+  // const formDataJason = JSON.stringify(formData);
+  // localStorage.setItem(STORAGE_KEY, formDataJason);
+  save(STORAGE_KEY, formData);
+}, 500));
 
 
-function onSubmitForm(event) {
+
+function getFormDataFromLocalStorage(){
+  // const savedData = localStorage.getItem(STORAGE_KEY);
+  const savedData = load(STORAGE_KEY);
+ 
+  if(savedData){
+    // const parsedData = JSON.parse(savedData);
+    const { email, message } = savedData;
+    // const { email, message } = parsedData;
+    refs.emailEl.value = email;
+    refs.messaEl.value = message;
+    formData.email = email;
+    formData.message = message;
+  };
+  };
+
+
+function onFormSubmit(event){
   event.preventDefault();
-
-  load(STORAGE_KEY);
+  console.log(formData);
   localStorage.removeItem(STORAGE_KEY);
-  refs.emailInput.value = '';
-  refs.messageInput.value = '';
+  event.currentTarget.reset();
+};
 
-  console.log(formState);
-}
+
+
+
+
+
+
