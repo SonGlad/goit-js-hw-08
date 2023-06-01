@@ -68,8 +68,8 @@ function getFormDataFromLocalStorage(){
     // const parsedData = JSON.parse(savedData);
     const { email, message } = savedData;
     // const { email, message } = parsedData;
-    refs.emailEl.value = email;
-    refs.messaEl.value = message;
+    refs.emailEl.value = email || "";
+    refs.messaEl.value = message || "";
     formData.email = email;
     formData.message = message;
   };
@@ -78,9 +78,11 @@ function getFormDataFromLocalStorage(){
 
 function onFormSubmit(event){
   event.preventDefault();
-  if(refs.emailEl.value === '' || refs.emailEl.value === '' || load(STORAGE_KEY) === null){
+  if(refs.emailEl.value === ''){
     return;
   }
+  formData.email = refs.emailEl.value;
+  formData.message = refs.messaEl.value;
   console.log(formData);
   // localStorage.removeItem(STORAGE_KEY);
   event.currentTarget.reset();
