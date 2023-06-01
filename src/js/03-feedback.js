@@ -78,6 +78,9 @@ function getFormDataFromLocalStorage(){
 
 function onFormSubmit(event){
   event.preventDefault();
+  if(refs.emailEl.value === '' || refs.emailEl.value === '' || load(STORAGE_KEY) === null){
+    return;
+  }
   console.log(formData);
   // localStorage.removeItem(STORAGE_KEY);
   event.currentTarget.reset();
