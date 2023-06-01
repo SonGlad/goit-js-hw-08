@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', getFormDataFromLocalStorage);
 refs.formEl.addEventListener('submit', onFormSubmit);
 
 
-
 refs.formEl.addEventListener('input', throttle(function(event) {
   formData[event.target.name] = event.target.value;
 
@@ -57,7 +56,6 @@ refs.formEl.addEventListener('input', throttle(function(event) {
   // localStorage.setItem(STORAGE_KEY, formDataJason);
   save(STORAGE_KEY, formData);
 }, 500));
-
 
 
 function getFormDataFromLocalStorage(){
