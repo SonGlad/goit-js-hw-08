@@ -83,8 +83,8 @@ function onFormSubmit(event){
   formData.message = refs.messaEl.value;
   console.log(formData);
   // localStorage.removeItem(STORAGE_KEY);
-  event.currentTarget.reset();
   remove(STORAGE_KEY);
+  refs.formEl.reset();
   formData.email = '';
   formData.message = '';
 };
